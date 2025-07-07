@@ -50,7 +50,7 @@ function checkPassword() {
         container.style.display = "none";
         messageDiv.style.display = "block";
         document.body.style.backgroundColor = "#000000";
-        document.body.style.backgroundImage = "url('../images/background.png')";
+        document.body.style.backgroundImage = "url('images/background.png')";
         document.body.style.backgroundSize = "cover";
         messageDiv.innerHTML = `<h2>${passwordInput.split('123')[0]}, är du en lojal vän eller en listig förrädare?</h2><p>Är du redo att ljuga, manipulera och svika dina vänner?</p>`;
         scrollImageDiv.innerHTML = `<img src='../images/scroll.png' alt='Skriftrulle Bild' style='width:60%; height:auto; margin: 20px 0; cursor: pointer;' onclick='showMainScroll()'>`;
