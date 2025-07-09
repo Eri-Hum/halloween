@@ -1,25 +1,25 @@
 let attempts = 0;
 
 const invitations = {
-    "sara123": "Välkommen, Sara!",
-    "sebastian123": "Välkommen, Sebastian!",
-    "sofia123": "Välkommen, Sofia!",
-    "edit123": "Välkommen, Edit!",
-    "adam123": "Välkommen, Adam!",
-    "david123": "Välkommen, David!",
-    "alex123": "Välkommen, Alex!",
-    "elsa123": "Välkommen, Elsa!",
-    "egon123": "Välkommen, Egon!",
-    "sonia123": "Välkommen, Sonia!",
-    "philip123": "Välkommen, Philip!",
-    "silke123": "Välkommen, Silke!",
-    "erik123": "Välkommen, Erik!",
-    "maja123": "Välkommen, Maja!",
-    "viktor123": "Välkommen, Viktor!",
-    "emil123": "Välkommen, Emil!",
-    "ella123": "Välkommen, Ella!",
-    "minou123": "Välkommen, Minou!",
-    "lucas123": "Välkommen, Lucas!"
+    "a": "Välkommen, Sara!",
+    "b": "Välkommen, Sebastian!",
+    "c": "Välkommen, Sofia!",
+    "d": "Välkommen, Edit!",
+    "e": "Välkommen, Adam!",
+    "f": "Välkommen, David!",
+    "g": "Välkommen, Alex!",
+    "s": "Välkommen, Elsa!",
+    "h": "Välkommen, Egon!",
+    "i": "Välkommen, Sonia!",
+    "j": "Välkommen, Philip!",
+    "k": "Välkommen, Silke!",
+    "l": "Välkommen, Erik!",
+    "m": "Välkommen, Maja!",
+    "n": "Välkommen, Viktor!",
+    "o": "Välkommen, Emil!",
+    "p": "Välkommen, Ella!",
+    "q": "Välkommen, Minou!",
+    "r": "Välkommen, Lucas!"
 };
 
 function startCountdown() {
@@ -40,6 +40,35 @@ function startCountdown() {
 
 startCountdown();
 
+// Add event listeners when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.getElementById("password");
+    const button = document.querySelector("button");
+    
+    // Show button when user starts typing
+    passwordInput.addEventListener('input', function() {
+        if (this.value.length > 0) {
+            button.style.display = 'block';
+        } else {
+            button.style.display = 'none';
+        }
+    });
+    
+    // Handle Enter and Backspace key events
+    passwordInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        } else if (event.key === 'Backspace' && this.value.length === 1) {
+            // If backspace will clear the last character, hide button after a short delay
+            setTimeout(() => {
+                if (this.value.length === 0) {
+                    button.style.display = 'none';
+                }
+            }, 10);
+        }
+    });
+});
+
 function checkPassword() {
     const passwordInput = document.getElementById("password").value;
     const messageDiv = document.getElementById("message");
@@ -50,10 +79,10 @@ function checkPassword() {
         container.style.display = "none";
         messageDiv.style.display = "block";
         document.body.style.backgroundColor = "#000000";
-        document.body.style.backgroundImage = "url('images/background.png')";
+        document.body.style.backgroundImage = "url('../images/background.png')";
         document.body.style.backgroundSize = "cover";
-        messageDiv.innerHTML = `<h2>${passwordInput.split('123')[0]}, är du en trogen vän eller en listig förrädare?</h2><p>Är du redo att ljuga, manipulera och svika dina vänner?</p>`;
-        scrollImageDiv.innerHTML = `<img src='images/scroll.png' alt='Skriftrulle Bild' style='width:60%; height:auto; margin: 20px 0; cursor: pointer;' onclick='showMainScroll()'>`;
+        messageDiv.innerHTML = `<h2>${invitations[passwordInput].split(', ')[1].replace('!', '')}, är du en trogen vän eller en listig förrädare?</h2><p>Är du redo att ljuga, manipulera och svika dina vänner?</p>`;
+        scrollImageDiv.innerHTML = `<img src='../images/scroll.png' alt='Skriftrulle Bild' class='wiggle' style='width:60%; height:auto; margin: 20px 0; cursor: pointer;' onclick='showMainScroll()'>`;
     } else {
         attempts++;
         messageDiv.style.display = "block";
@@ -67,15 +96,23 @@ function checkPassword() {
 
 function showMainScroll() {
     const scrollImageDiv = document.getElementById('scroll-image');
-    const currentImg = scrollImageDiv.querySelector('img');
     
-    // Add transition animation for both width and transform
-    currentImg.style.transition = 'width 0.8s ease-in-out, transform 0.8s ease-in-out';
-    currentImg.style.width = '96%';
-    currentImg.style.transform = 'translateY(-50px)';
+    // Check if we're on mobile
+    const isMobile = window.innerWidth <= 768;
+    const finalWidth = isMobile ? '100%' : '96%';
     
-    // Wait for animation to complete, then switch images
-    setTimeout(() => {
-        scrollImageDiv.innerHTML = `<img src='images/skriftrulle.png' alt='Skriftrulle Bild' style='width:96%; height:auto; margin: 20px 0;'>`;
-    }, 800);
+    // Immediately switch to scroll3.png with text overlay
+    scrollImageDiv.innerHTML = `
+        <div class="scroll-container">
+            <img src='../images/scroll3.png' alt='Skriftrulle Bild' style='width:${finalWidth}; height:auto; margin: 20px 0; display: block;'>
+            <div class="scroll-text-overlay">
+                <h3>DU ÄR INBJUDEN TILL FÖRRÄDARNA</h3>
+                <p>Följ med på en helkväll av spel, mat och festande!</p>
+                <p><strong>DATUM:</strong> 1 november, 2025</p>
+                <p><strong>TID:</strong> 13:00 - Sent</p>
+                <p><strong>PLATS:</strong> Ryssbygården</p>
+                <p>Kom förberedd för en kväll av list och spänning!</p>
+            </div>
+        </div>
+    `;
 } 
