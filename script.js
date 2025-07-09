@@ -70,19 +70,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function checkPassword() {
-    const passwordInput = document.getElementById("password").value;
+    const passwordInput = document.getElementById("password");
+    const passwordValue = passwordInput.value;
     const messageDiv = document.getElementById("message");
     const container = document.querySelector(".container");
     const scrollImageDiv = document.getElementById('scroll-image');
 
-    if (invitations[passwordInput]) {
+    // Force mobile zoom out by blurring the input field
+    passwordInput.blur();
+    
+    // Additional mobile zoom fix
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        const viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) {
+            viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+    }
+
+    if (invitations[passwordValue]) {
         container.style.display = "none";
         messageDiv.style.display = "block";
         document.body.style.backgroundColor = "#000000";
-        document.body.style.backgroundImage = "url('images/background.png')";
+        document.body.style.backgroundImage = "url('../images/background.png')";
         document.body.style.backgroundSize = "cover";
-        messageDiv.innerHTML = `<h2>${invitations[passwordInput].split(', ')[1].replace('!', '')}, är du en trogen vän eller en listig förrädare?</h2><p>Är du redo att ljuga, manipulera och svika dina vänner?</p>`;
-        scrollImageDiv.innerHTML = `<img src='images/scroll.png' alt='Skriftrulle Bild' class='wiggle' style='width:60%; height:auto; margin: 20px 0; cursor: pointer;' onclick='showMainScroll()'>`;
+        messageDiv.innerHTML = `<h2>${invitations[passwordValue].split(', ')[1].replace('!', '')}, är du en trogen vän eller en listig förrädare?</h2><p>Är du redo att ljuga, manipulera och svika dina vänner?</p>`;
+        scrollImageDiv.innerHTML = `<img src='../images/scroll.png' alt='Skriftrulle Bild' class='wiggle' style='width:60%; height:auto; margin: 20px 0; cursor: pointer;' onclick='showMainScroll()'>`;
     } else {
         attempts++;
         messageDiv.style.display = "block";
@@ -104,7 +116,7 @@ function showMainScroll() {
     // Immediately switch to scroll3.png with text overlay
     scrollImageDiv.innerHTML = `
         <div class="scroll-container">
-            <img src='images/scroll3.png' alt='Skriftrulle Bild' style='width:${finalWidth}; height:auto; margin: 20px 0; display: block;'>
+            <img src='../images/scroll3.png' alt='Skriftrulle Bild' style='width:${finalWidth}; height:auto; margin: 20px 0; display: block;'>
             <div class="scroll-text-overlay">
                 <h3>DU ÄR INBJUDEN TILL FÖRRÄDARNA</h3>
                 <p>Följ med på en helkväll av spel, mat och festande!</p>
