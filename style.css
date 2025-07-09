@@ -57,6 +57,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    display: none; /* Initially hidden */
 }
 
 button:hover {
@@ -108,7 +109,65 @@ button:hover {
 
 @media (max-width: 768px) {
     #scroll-image {
-        width: 100vh;
+        width: 100%;
         height: auto;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #scroll-image img {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0;
+        display: block;
+    }
+}
+
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(2deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.wiggle {
+    animation: wiggle 2s ease-in-out infinite;
+}
+
+/* Text overlay for scroll3.png */
+.scroll-text-overlay {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: #000000;
+    padding: 40px 30px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Cinzel Decorative', serif;
+    z-index: 10;
+    width: 96vw;
+    height: 80%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.scroll-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .scroll-text-overlay {
+        padding: 25px 20px;
+        font-size: 14px;
+        width: 96vw;
+        height: 80%;
+        top: 10%;
     }
 }
